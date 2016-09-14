@@ -1,0 +1,44 @@
+﻿@model googleahuthentication.viewmodel.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+@if(ViewBag.Status==null || !ViewBag.Status)
+{
+    <div>@ViewBag.Massage</div>
+    <div>@using (Html.BeginForm())
+    {
+        <div class="form-group">
+
+            <label for="username">UserName:</label>
+            @Html.TextBoxFor(x=>x.UserName, new { @class = "form-control" } )
+        </div>
+        <div class="form-group">
+
+            <label for="Password">Password:</label>
+            @Html.TextBoxFor(x=>x.Password ,new {@class="form-control",type="password"})
+        </div>
+        <input type="submit" value="Login" class="btn btn-default" />
+    }
+    </div>
+}
+else
+{
+    <div>@ViewBag.Massage</div>
+    <div>
+
+        <img src="@ViewBag.BarcodeImageUrl" />
+    </div>
+    <div>
+        Manual Setup Code :@ViewBag.SetupCode
+    </div>
+    <div>
+        @using (Html.BeginForm("Verify2FA","Home",FormMethod.Post))
+        {
+            <input type="text" name="passcode" />
+            <input type="submit" class="btn btn-success" />
+        }
+    </div>
+}
